@@ -1,0 +1,37 @@
+services:
+  clickhouse:
+    build:
+      context: ./clickhouse
+    image: clickhouse/clickhouse-server:custom
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=password123
+
+  ingestion:
+    build:
+      context: ./ingestion
+    image: fpl-ingestion:latest
+    volumes:
+      - ./ingestion/src:/app
+    environment:
+      - CLICKHOUSE_HOST=clickhouse
+      - CLICKHOUSE_PORT=8123
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=password123
+      - CLICKHOUSE_DATABASE=raw
+    depends_on:
+      - clickhouse
+
+  dbt:
+    build:
+      context: ./dbt
+    image: fpl-transformation:latest
+    volumes:
+      - ./dbt:/app
+      - ./dbt/profiles.yml:/root/.dbt/profiles.yml:ro
+    working_dir: /app/fpl_transformations
+    depends_on:
+      - clickhouse

@@ -1,0 +1,42 @@
+dim_players
+
+Purpose: A single, clean table for all player attributes.
+Source: int_players_enriched
+Columns: player_id, full_name, team_name, position, current_cost, status, etc.
+Use Case: Filtering and grouping analysis by player, team, or position.
+dim_teams
+
+Purpose: A detailed reference for each team.
+Source: stg_teams
+Columns: team_id, team_name, team_short_name, strength metrics, etc.
+Use Case: Analyzing team-level performance and fixture difficulty.
+dim_gameweeks
+
+Purpose: Describes each gameweek.
+Source: stg_gameweeks
+Columns: gameweek_id, gameweek_name, deadline_time, is_current, average_score, etc.
+Use Case: Analyzing trends over time, week by week.
+dim_fixtures
+
+Purpose: A complete view of every match played.
+Source: int_fixtures_with_teams
+Columns: fixture_id, gameweek_id, kickoff_time, home_team_name, away_team_name, home_score, away_score, result.
+Use Case: Analyzing match results and team matchups.
+Fact Tables (The "Measurements")
+These tables capture events and metrics. They are often large and contain foreign keys to your dimension tables.
+
+fct_player_gameweek_performance
+
+Purpose: The core of your FPL analysis. This table would track every player's performance in every gameweek they participated in.
+Source: This would be a more complex transformation, likely parsing the stats_json from stg_fixtures and joining it with dim_players and dim_gameweeks.
+Grain: One row per player per gameweek.
+Columns: player_id (FK), fixture_id (FK), gameweek_id (FK), minutes_played, goals_scored, assists, clean_sheets, bonus_points, total_points.
+Use Case: This is your main table for analyzing player form, points, and value over time.
+fct_team_results
+
+Purpose: To aggregate team-level results for each fixture.
+Source: dim_fixtures
+Grain: One row per team per fixture.
+Columns: team_id (FK), fixture_id (FK), gameweek_id (FK), was_home_team, goals_scored, goals_conceded, points (3 for a win, 1 for a draw, 0 for a loss).
+Use Case: Creating league tables, analyzing team form, and home/away performance.
+With these mart tables, you could easily build dashboards and perform analyses like:
