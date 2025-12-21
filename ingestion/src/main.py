@@ -13,7 +13,6 @@ def _get_client_with_retry(retries: int = 12, delay: float = 1.0):
                 host=os.getenv("CLICKHOUSE_HOST", "localhost"),
                 port=int(os.getenv("CLICKHOUSE_PORT", 8123)),
                 username=os.getenv("CLICKHOUSE_USER", "default"),
-                password=os.getenv("CLICKHOUSE_PASSWORD", ""),
                 database=os.getenv("CLICKHOUSE_DATABASE", "raw"),
                 secure=os.getenv("CLICKHOUSE_SECURE", "false").lower()
                 in ("1", "true", "yes"),

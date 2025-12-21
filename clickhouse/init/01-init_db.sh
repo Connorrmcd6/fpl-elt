@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-clickhouse-client --multiquery --user "${CLICKHOUSE_USER:-default}" --password "${CLICKHOUSE_PASSWORD:-}" <<'EOSQL'
+clickhouse-client --multiquery --user "${CLICKHOUSE_USER:-default}" <<'EOSQL'
 CREATE DATABASE IF NOT EXISTS raw;
 CREATE DATABASE IF NOT EXISTS staging;
 CREATE DATABASE IF NOT EXISTS intermediate;
