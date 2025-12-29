@@ -1,15 +1,15 @@
-# FPL-ETL: Fantasy Premier League Data Pipeline
+# FPL-ELT: A Proof of Concept ELT Pipeline
 
-This project showcases a modern end to end ETL pipeline built on data from the official Fantasy Premier League API. It uses a custom Python client to extract raw FPL data, loads it into a ClickHouse data warehouse via clickhouse-connect, and applies dbt transformations to produce analytics ready datasets.
+This project serves as a Proof of Concept (PoC) demonstrating a modern, end-to-end ELT pipeline built on data from the official Fantasy Premier League (FPL) API. It showcases how to integrate Python for data ingestion, ClickHouse as a columnar data warehouse, and dbt for data transformation, all containerized with Docker and Docker Compose.
 
-The focus of the project is on clean architecture, reproducibility, and realistic data engineering patterns.
+The focus of the project is on clean architecture, reproducibility, and demonstrating core data engineering patterns in a containerized environment.
 
 ## Tech Stack
 
 - **Data Ingestion**: Python
 - **Data Warehouse**: ClickHouse
 - **Data Transformation**: dbt (Data Build Tool)
-- **Orchestration & Environment**: Docker & Docker Compose (Airflow to come)
+- **Orchestration & Environment**: Docker, Docker Compose, and Make
 
 ## Project Structure
 
@@ -37,43 +37,31 @@ The dbt models are structured into a layered data architecture, promoting modula
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Make](https://www.gnu.org/software/make/)
 
-### Running the Pipeline
+### Running the Pipeline with Make
 
-Follow these steps to run the full ETL pipeline from your terminal.
+A `Makefile` is provided to simplify running the pipeline.
 
-1.  **Build the Docker Images**
-    This command builds the images for the ingestion and dbt services defined in your `docker-compose.yml`.
-
-    ```bash
-    docker compose build
-    ```
-
-2.  **Start the ClickHouse Service**
-    This starts the ClickHouse database container in the background.
+1.  **Run the Full ELT Pipeline**
+    This single command builds the Docker images (if they don't exist), starts the ClickHouse service, waits for it to be healthy, runs the ingestion script, and finally executes the dbt transformations.
 
     ```bash
-    docker compose up -d clickhouse
+    make all
     ```
 
-3.  **Run the Ingestion Service**
-    This runs the Python script to fetch data from the FPL API and load it into the `raw` schema in ClickHouse.
+2.  **Cleaning Up**
+    To stop and remove all containers, networks, and volumes created by the project, run:
 
     ```bash
-    docker compose run --rm ingestion
+    make clean
     ```
 
-4.  **Run the dbt Transformations**
-    This executes all dbt models, transforming the raw data and building the staging, intermediate, and marts layers.
+## Future Improvements
 
-    ```bash
-    docker compose run --rm dbt run
-    ```
+This PoC provides a solid foundation. Future enhancements could include:
 
-### Cleaning Up
-
-To stop and remove all containers, networks, and volumes created by the project, run:
-
-```bash
-docker compose down -v --remove-orphans
-```
+- **Incremental Processing**: Implement incremental models in dbt and update the ingestion script to only process new or changed data. This would significantly reduce run times and computational cost on subsequent runs.
+- **Dedicated Orchestration**: Integrate a workflow orchestrator like **Apache Airflow** or **Dagster** to manage scheduling, dependencies, retries, and monitoring for a more robust, production-grade pipeline.
+- **Data Quality Monitoring**: Expand on the existing dbt tests with more comprehensive data quality checks and implement a tool like Great Expectations for automated data validation and alerting.
+- **Enhanced Error Handling**: Improve the Python ingestion client with more robust error handling, such as exponential backoff and retry mechanisms for API requests.
