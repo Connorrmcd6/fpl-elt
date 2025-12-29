@@ -65,3 +65,4 @@ This PoC provides a solid foundation. Future enhancements could include:
 - **Dedicated Orchestration**: Integrate a workflow orchestrator like **Apache Airflow** or **Dagster** to manage scheduling, dependencies, retries, and monitoring for a more robust, production-grade pipeline.
 - **Data Quality Monitoring**: Expand on the existing dbt tests with more comprehensive data quality checks and implement a tool like Great Expectations for automated data validation and alerting.
 - **Enhanced Error Handling**: Improve the Python ingestion client with more robust error handling, such as exponential backoff and retry mechanisms for API requests.
+- **Data Visualization**: Integrate an open-source BI tool like **Metabase** or **Apache Superset** to connect to ClickHouse and build interactive dashboards on top of the final data marts.
