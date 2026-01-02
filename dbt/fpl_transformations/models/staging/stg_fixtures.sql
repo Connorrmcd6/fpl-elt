@@ -1,11 +1,11 @@
-{{ config(materialized='table', database='staging') }}
+{{ config(database='staging') }}
 
 with raw_fixtures as (
   select
     id as raw_table_id,
     raw_data,
     loaded_at
-  from raw.fixtures
+  from {{ source('raw', 'fixtures') }}
 )
 
 select

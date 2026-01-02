@@ -31,6 +31,37 @@ The dbt models are structured into a layered data architecture, promoting modula
 - **`intermediate`**: Contains more complex transformations, such as joining different staging models to create enriched datasets.
 - **`marts`**: The final layer, providing aggregated, denormalized tables ready for business intelligence, analytics, or reporting.
 
+## Testing
+
+The ingestion layer includes a comprehensive test suite to ensure the reliability of the data extraction and loading processes.
+
+### Test Coverage
+
+- **`test_fpl_client.py`**: Tests for the FPL API client, including:
+
+  - Bootstrap data caching to ensure API responses are cached on subsequent calls
+  - Correct extraction of components from the bootstrap endpoint
+  - Proper handling of the fixtures endpoint
+  - All tests use mock responses stored in `mock_responses/` to avoid hitting the live API
+
+- **`test_loader.py`**: Tests for the ClickHouse data loader, including:
+  - Loading various data structures into the raw schema
+  - Hash generation for records missing ID fields
+  - Proper handling of edge cases (empty data, null values)
+  - Validation of correct table names, column names, and data serialization
+
+### Running Tests
+
+To run the test suite locally:
+
+```bash
+cd ingestion
+pip install -r requirements-dev.txt
+pytest
+```
+
+The tests use `pytest` with the `pytest-mock` plugin for mocking external dependencies, ensuring fast and reliable test execution without requiring a live database or API connection.
+
 ## Getting Started
 
 ### Prerequisites

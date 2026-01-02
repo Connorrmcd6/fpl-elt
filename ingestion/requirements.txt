@@ -1,2 +1,2 @@
-requests
-clickhouse-connect
+requests==2.32.5
+clickhouse-connect==0.10.0

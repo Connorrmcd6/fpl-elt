@@ -26,7 +26,6 @@ def _get_client_with_retry(retries: int = 12, delay: float = 1.0):
 def main():
     client = fpl_client.FPLClient()
 
-    # Fetch bootstrap components in one call
     bootstrap_keys = [
         "chips",
         "elements",
@@ -37,7 +36,6 @@ def main():
     ]
     bootstrap_data = client.get_bootstrap_components(bootstrap_keys)
 
-    # Fetch fixtures separately as it's a different endpoint
     fixtures = client.get_fixtures()
 
     ch = _get_client_with_retry()

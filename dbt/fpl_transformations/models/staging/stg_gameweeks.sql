@@ -1,10 +1,10 @@
-{{ config(materialized='table', database='staging') }}
+{{ config(database='staging') }}
 
 with raw_gameweeks as (
   select
     raw_data,
     loaded_at
-  from raw.gameweeks
+  from {{ source('raw', 'gameweeks') }}
 )
   select
     JSONExtractInt(src.raw_data, 'id') as gameweek_id,

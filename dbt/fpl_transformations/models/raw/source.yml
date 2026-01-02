@@ -1,0 +1,60 @@
+sources:
+  - name: raw
+    description: "Raw tables loaded from the FPL API by the ingestion script."
+    schema: raw
+    tables:
+      - name: chips
+        description: "Raw data for available chips (e.g., wildcard, free hit)."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: players
+        description: "Raw data for all players in the game."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: player_stats
+        description: "Raw data for player statistics types. (e.g., minutes played, goals conceded)."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: player_types
+        description: "Raw data for player position types (Goalkeeper, Defender, etc.)."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: gameweeks
+        description: "Raw data for all gameweeks in the season."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: teams
+        description: "Raw data for all Premier League teams."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]
+
+      - name: fixtures
+        description: "Raw data for all fixtures in the season."
+        columns:
+          - name: id
+            tests: [unique, not_null]
+          - name: raw_data
+            tests: [not_null]

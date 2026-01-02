@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='intermediate') }}
+{{ config(database='intermediate') }}
 
 WITH players AS (
     SELECT * FROM {{ ref('stg_players') }}

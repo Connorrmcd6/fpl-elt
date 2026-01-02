@@ -1,10 +1,10 @@
-{{ config(materialized='table', database='staging') }}
+{{ config(database='staging') }}
 
 with raw_teams as (
   select
     raw_data,
     loaded_at
-  from raw.teams
+  from {{ source('raw', 'teams') }}
 )
 
   select

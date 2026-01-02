@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='marts') }}
+{{ config(database='marts') }}
 
 -- Grain: One row per player per gameweek
 WITH player_events AS (

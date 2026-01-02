@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='marts') }}
+{{ config(database='marts') }}
 
 -- Gameweek dimension
 SELECT

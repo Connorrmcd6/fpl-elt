@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='marts') }}
+{{ config(database='marts') }}
 
 -- Player dimension with current attributes
 SELECT

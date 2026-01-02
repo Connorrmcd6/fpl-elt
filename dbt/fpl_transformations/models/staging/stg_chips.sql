@@ -1,11 +1,11 @@
-{{ config(materialized='table', database='staging') }}
+{{ config(database='staging') }}
 
 with raw_chips as (
   select
     id as raw_table_id,
     raw_data,
     loaded_at
-  from raw.chips
+  from {{ source('raw', 'chips') }}
 )
 
 select

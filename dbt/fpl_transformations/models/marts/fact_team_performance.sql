@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='marts') }}
+{{ config(database='marts') }}
 
 -- Grain: Team performance per gameweek
 WITH fixture_results AS (

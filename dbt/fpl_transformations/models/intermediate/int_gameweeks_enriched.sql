@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='intermediate') }}
+{{ config(database='intermediate') }}
 
     SELECT 
     gw.gameweek_id,

@@ -3,9 +3,6 @@ set -e
 
 clickhouse-client --multiquery --user "${CLICKHOUSE_USER:-default}" <<'EOSQL'
 CREATE DATABASE IF NOT EXISTS raw;
-CREATE DATABASE IF NOT EXISTS staging;
-CREATE DATABASE IF NOT EXISTS intermediate;
-CREATE DATABASE IF NOT EXISTS marts;
 
 CREATE TABLE IF NOT EXISTS raw.chips
 (

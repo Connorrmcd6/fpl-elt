@@ -1,4 +1,4 @@
-{{ config(materialized='table', database='intermediate') }}
+{{ config(database='intermediate') }}
 
 WITH fixtures AS (
     SELECT * FROM {{ ref('stg_fixtures') }}
